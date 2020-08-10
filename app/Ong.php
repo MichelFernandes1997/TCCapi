@@ -9,10 +9,14 @@ class Ong extends Model
 {
     protected $fillable = [
         'nome', 'cnpj', 'email',
-        'dataCriacao', 'descricao'
+        'dataCriacao', 'descricao', 'senha'
     ];
 
-    public function projetos()
+    protected $hidden = [
+        'senha'
+    ];
+
+    public function projetos(): HasMany
     {
         return $this->hasMany(Projeto::class);
     }

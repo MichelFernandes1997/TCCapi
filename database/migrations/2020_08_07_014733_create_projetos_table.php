@@ -20,8 +20,8 @@ class CreateProjetosTable extends Migration
             $table->dateTime('dataInicio');
             $table->dateTime('dataTermino');
             $table->string('endereco');
-            $table->foreignId('ong_id')->constrained();
-            $table->foreignId('voluntario_id')->constrained();
+
+            $table->foreignId('ong_id')->nullable()->constrained();
 
             $table->timestamps();
             $table->softDeletes();

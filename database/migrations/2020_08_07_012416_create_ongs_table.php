@@ -22,8 +22,6 @@ class CreateOngsTable extends Migration
             $table->dateTime('dataCriacao');
             $table->text('descricao');
 
-            $table->foreignId('projeto_id')->constrained();
-
             $table->timestamps();
             $table->softDeletes();
         });

@@ -21,8 +21,6 @@ class CreateVoluntariosTable extends Migration
             $table->string('senha');
             $table->dateTime('dataNascimento');
 
-            $table->foreignId('projeto_id')->constrained();
-
             $table->timestamps();
             $table->softDeletes();
         });

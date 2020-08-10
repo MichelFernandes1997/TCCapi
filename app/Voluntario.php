@@ -9,10 +9,14 @@ class Voluntario extends Model
 {
     protected $fillable = [
         'nome', 'cpf', 'email',
-        'dataNascimento'
+        'dataNascimento', 'senha'
     ];
 
-    public function projetos()
+    protected $hidden = [
+        'senha'
+    ];
+
+    public function projetos(): BelongsToMany
     {
         return $this->belongsToMany(Projeto::class)->withTimestamps();
     }

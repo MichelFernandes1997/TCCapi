@@ -10,15 +10,19 @@ class Projeto extends Model
 {
     protected $fillable = [
         'nome', 'descricao', 'dataInicio',
-        'dataTermino', 'endereco'
+        'dataTermino', 'endereco', 'ong_id'
     ];
 
-    public function ong()
+    protected $hidden = [
+        
+    ];
+
+    public function ong(): BelongsTo
     {
         return $this->belongsTo(Ong::class);
     }
 
-    public function voluntarios()
+    public function voluntarios(): BelongsToMany
     {
         return $this->belongsToMany(Voluntario::class)->withTimestamps();
     }
