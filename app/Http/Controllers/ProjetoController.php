@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Projeto;
 
+use Carbon\Carbon;
+
 class ProjetoController extends Controller
 {
     /**
@@ -43,8 +45,8 @@ class ProjetoController extends Controller
         $projetoCreated = Projeto::create([
             "nome" => $projetoAtributtes["nome"],
             "descricao" => $projetoAtributtes["descricao"],
-            "dataInicio" => $projetoAtributtes["dataInicio"],
-            "dataTermino" => $projetoAtributtes["dataTermino"],
+            "dataInicio" => Carbon::parse($projetoAtributtes["dataInicio"]),
+            "dataTermino" => Carbon::parse($projetoAtributtes["dataTermino"]),
             "endereco" => $projetoAtributtes["endereco"],
             "ong_id" => $projetoAtributtes["ong_id"],
         ]);

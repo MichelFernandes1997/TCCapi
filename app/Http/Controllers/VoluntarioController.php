@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Voluntario;
 
+use Carbon\Carbon;
+
 class VoluntarioController extends Controller
 {
     /**
@@ -42,7 +44,7 @@ class VoluntarioController extends Controller
             "nome" => $voluntarioAtributtes["nome"],
             "cpf" => $voluntarioAtributtes["cpf"],
             "email" => $voluntarioAtributtes["email"],
-            "dataNascimento" => $voluntarioAtributtes["dataNascimento"],
+            "dataNascimento" => Carbon::parse($voluntarioAtributtes["dataNascimento"]),
             "senha" => $voluntarioAtributtes["senha"]
         ]);
 

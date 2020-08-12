@@ -14,7 +14,7 @@ class Projeto extends Model
     ];
 
     protected $hidden = [
-        
+        'ong_id'
     ];
 
     public function ong(): BelongsTo

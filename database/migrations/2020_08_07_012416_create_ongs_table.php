@@ -16,8 +16,8 @@ class CreateOngsTable extends Migration
         Schema::create('ongs', function (Blueprint $table) {
             $table->id();
             $table->string('nome', 20);
-            $table->string('cnpj', 19);
-            $table->string('email', 30);
+            $table->string('cnpj', 19)->unique();
+            $table->string('email', 30)->unique();
             $table->string('senha');
             $table->dateTime('dataCriacao');
             $table->text('descricao');

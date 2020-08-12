@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Ong;
 
+use Carbon\Carbon;
+
 class OngController extends Controller
 {
     /**
@@ -42,12 +44,12 @@ class OngController extends Controller
             "nome" => $ongAtributtes["nome"],
             "cnpj" => $ongAtributtes["cnpj"],
             "email" => $ongAtributtes["email"],
-            "dataCriacao" => $ongAtributtes["dataCriacao"],
+            "dataCriacao" => Carbon::parse($ongAtributtes["dataCriacao"]),
             "descricao" => $ongAtributtes["descricao"],
             "senha" => $ongAtributtes["senha"]
         ]);
 
-        return response()->json(["ong", $ongCreated], 201);
+        return response()->json(['ong' => $ongCreated], 201);
     }
 
     /**
