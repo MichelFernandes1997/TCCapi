@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+Route::post('/login', 'AuthController@login');
+
+Route::post('/logout', 'AuthController@logout');
+
 Route::resource('ong', OngController::class);
 
 Route::resource('voluntario', VoluntarioController::class);

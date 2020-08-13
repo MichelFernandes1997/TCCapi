@@ -15,7 +15,7 @@ class CreateVoluntariosTable extends Migration
     {
         Schema::create('voluntarios', function (Blueprint $table) {
             $table->id();
-            $table->string('nome', 100);
+            $table->string('nomeCompleto', 100);
             $table->string('cpf', 19)->unique();
             $table->string('email', 30)->unique();
             $table->string('senha');

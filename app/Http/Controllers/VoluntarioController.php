@@ -41,14 +41,14 @@ class VoluntarioController extends Controller
         $voluntarioAtributtes = $request->all();
 
         $voluntarioCreated = Voluntario::create([
-            "nome" => $voluntarioAtributtes["nome"],
+            "nome" => $voluntarioAtributtes["nomeCompleto"],
             "cpf" => $voluntarioAtributtes["cpf"],
             "email" => $voluntarioAtributtes["email"],
             "dataNascimento" => Carbon::parse($voluntarioAtributtes["dataNascimento"]),
             "senha" => $voluntarioAtributtes["senha"]
         ]);
 
-        return response()->json(["voluntario", $voluntarioCreated], 201);
+        return response()->json(["voluntario" => $voluntarioCreated], 201);
     }
 
     /**
