@@ -11,6 +11,16 @@ use Carbon\Carbon;
 class VoluntarioController extends Controller
 {
     /**
+     * Create a controller for "Voluntario" resource.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('check.token')->except('store');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

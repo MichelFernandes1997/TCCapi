@@ -18,6 +18,12 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        \App\Events\StorageVoluntarioToken::class => [
+            \App\Listeners\StorageVoluntarioTokenRedis::class,
+        ],
+        \App\Events\StorageOngToken::class => [
+            \App\Listeners\StorageOngTokenRedis::class,
+        ],
     ];
 
     /**
