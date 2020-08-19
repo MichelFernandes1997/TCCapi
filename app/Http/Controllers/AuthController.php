@@ -67,7 +67,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        Redis::del($request->user["token"]);
+        Redis::del($request->token);
 
         return response()->json(['logout' => true]);
     }
