@@ -24,6 +24,10 @@ Route::get('/me', 'AuthController@me')->middleware('check.token');
 
 Route::post('/logout', 'AuthController@logout')->middleware('check.token');
 
+Route::get('/list/projeto/{ong_id}', 'ProjetoController@list')->middleware('check.token');
+
+Route::get('/all/projeto', 'ProjetoController@all')->middleware('check.token');
+
 Route::resource('ong', OngController::class);
 
 Route::resource('voluntario', VoluntarioController::class);

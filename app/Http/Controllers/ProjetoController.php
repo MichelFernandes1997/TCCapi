@@ -11,13 +11,37 @@ use Carbon\Carbon;
 class ProjetoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource in index.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $projetos = Projeto::with('ong', 'voluntarios')->get();
+        $projetos = Projeto::with('ong', 'voluntarios')->orderBy('id', 'desc')->take(11)->get();
+
+        return response()->json(["projetos" => $projetos], 200);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function list($ong_id)
+    {
+        $projetos = Projeto::with('ong', 'voluntarios')->where('ong_id', $ong_id)->orderBy('id', 'desc')->get();
+
+        return response()->json(["projetos" => $projetos], 200);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function all()
+    {
+        $projetos = Projeto::with('ong', 'voluntarios')->orderBy('id', 'desc')->get();
 
         return response()->json(["projetos" => $projetos], 200);
     }
@@ -62,7 +86,9 @@ class ProjetoController extends Controller
      */
     public function show($id)
     {
-        //
+        $projeto = Projeto::with('ong', 'voluntarios')->where('id', $id)->get();
+
+        return response()->json(["projeto" => $projeto->first()], 200);
     }
 
     /**
@@ -96,6 +122,10 @@ class ProjetoController extends Controller
                 $projetoWillUpdate->voluntarios()->attach([$value]);
             } else if($key === 'detach_voluntario_id') {
                 $projetoWillUpdate->voluntarios()->detach([$value]);
+            } else if ($key === 'dataInicio') {
+                $projetoWillUpdate->$key = Carbon::parse($value);
+            } else if ($key === 'dataTermino') {
+                $projetoWillUpdate->$key = Carbon::parse($value);
             } else {
                 $projetoWillUpdate->$key = $value;
             }
