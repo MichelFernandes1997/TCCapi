@@ -17,7 +17,9 @@ class ProjetoController extends Controller
      */
     public function index()
     {
-        $projetos = Projeto::with('ong', 'voluntarios')->orderBy('id', 'desc')->take(11)->get();
+        $projetos = Projeto::with('ong', 'voluntarios')->orderBy('id', 'desc')
+                                                       ->take(11)
+                                                       ->get();
 
         return response()->json(["projetos" => $projetos], 200);
     }
@@ -29,7 +31,9 @@ class ProjetoController extends Controller
      */
     public function list($ong_id)
     {
-        $projetos = Projeto::with('ong', 'voluntarios')->where('ong_id', $ong_id)->orderBy('id', 'desc')->get();
+        $projetos = Projeto::with('ong', 'voluntarios')->where('ong_id', $ong_id)
+                                                       ->orderBy('id', 'desc')
+                                                       ->get();
 
         return response()->json(["projetos" => $projetos], 200);
     }
@@ -41,7 +45,52 @@ class ProjetoController extends Controller
      */
     public function all()
     {
-        $projetos = Projeto::with('ong', 'voluntarios')->orderBy('id', 'desc')->get();
+        $projetos = Projeto::with('ong', 'voluntarios')->orderBy('id', 'desc')
+                                                       ->get();
+
+        return response()->json(["projetos" => $projetos], 200);
+    }
+
+    /**
+     * Display a listing of the resource will start.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function startTo($ong_id)
+    {
+        $projetos = Projeto::with('ong', 'voluntarios')->where('ong_id', $ong_id)
+                                                       ->where('dataInicio', '>', Carbon::now())
+                                                       ->orderBy('dataInicio', 'desc')
+                                                       ->get();
+
+        return response()->json(["projetos" => $projetos], 200);
+    }
+
+    /**
+     * Display a listing of the resource started.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function started()
+    {
+        $projetos = Projeto::with('ong', 'voluntarios')->where('dataInicio', '>=', Carbon::now())
+                                                       ->where('dataTermino', '>=', Carbon::now())
+                                                       ->orderBy('dataInicio', 'desc')
+                                                       ->get();
+
+        return response()->json(["projetos" => $projetos], 200);
+    }
+
+    /**
+     * Display a listing of the resource started.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function passed()
+    {
+        $projetos = Projeto::with('ong', 'voluntarios')->where('dataInicio', '<', Carbon::now())
+                                                       ->orderBy('dataInicio', 'desc')
+                                                       ->get();
 
         return response()->json(["projetos" => $projetos], 200);
     }
@@ -86,7 +135,8 @@ class ProjetoController extends Controller
      */
     public function show($id)
     {
-        $projeto = Projeto::with('ong', 'voluntarios')->where('id', $id)->get();
+        $projeto = Projeto::with('ong', 'voluntarios')->where('id', $id)
+                                                      ->get();
 
         return response()->json(["projeto" => $projeto->first()], 200);
     }
