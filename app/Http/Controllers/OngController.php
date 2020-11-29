@@ -27,7 +27,7 @@ class OngController extends Controller
      */
     public function index()
     {
-        return response()->json(['ongs' => Ong::with('projetos')->get()], 200);
+        return response()->json(['ongs' => Ong::with('projetos')->paginate(16)], 200);
     }
 
     /**

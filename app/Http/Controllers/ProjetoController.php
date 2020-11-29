@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Projeto;
 
+use App\Voluntario;
+
 use Carbon\Carbon;
 
 class ProjetoController extends Controller
@@ -33,7 +35,7 @@ class ProjetoController extends Controller
     {
         $projetos = Projeto::with('ong', 'voluntarios')->where('ong_id', $ong_id)
                                                        ->orderBy('id', 'desc')
-                                                       ->get();
+                                                       ->paginate(16);
 
         return response()->json(["projetos" => $projetos], 200);
     }
@@ -46,7 +48,7 @@ class ProjetoController extends Controller
     public function all()
     {
         $projetos = Projeto::with('ong', 'voluntarios')->orderBy('id', 'desc')
-                                                       ->get();
+                                                       ->paginate(16);
 
         return response()->json(["projetos" => $projetos], 200);
     }
@@ -61,7 +63,7 @@ class ProjetoController extends Controller
         $projetos = Projeto::with('ong', 'voluntarios')->where('ong_id', $ong_id)
                                                        ->where('dataInicio', '>', Carbon::now())
                                                        ->orderBy('dataInicio', 'desc')
-                                                       ->get();
+                                                       ->paginate(16);
 
         return response()->json(["projetos" => $projetos], 200);
     }
@@ -73,10 +75,10 @@ class ProjetoController extends Controller
      */
     public function started()
     {
-        $projetos = Projeto::with('ong', 'voluntarios')->where('dataInicio', '>=', Carbon::now())
-                                                       ->where('dataTermino', '>=', Carbon::now())
+        $projetos = Projeto::with('ong', 'voluntarios')->where('dataInicio', '<=', Carbon::now())
+                                                       ->where('dataTermino', '>', Carbon::now())
                                                        ->orderBy('dataInicio', 'desc')
-                                                       ->get();
+                                                       ->paginate(16);
 
         return response()->json(["projetos" => $projetos], 200);
     }
@@ -88,9 +90,9 @@ class ProjetoController extends Controller
      */
     public function passed()
     {
-        $projetos = Projeto::with('ong', 'voluntarios')->where('dataInicio', '<', Carbon::now())
+        $projetos = Projeto::with('ong', 'voluntarios')->where('dataTermino', '<', Carbon::now())
                                                        ->orderBy('dataInicio', 'desc')
-                                                       ->get();
+                                                       ->paginate(16);
 
         return response()->json(["projetos" => $projetos], 200);
     }
@@ -184,7 +186,43 @@ class ProjetoController extends Controller
         $projetoWillUpdate->save();
         
 
-        return response()->json(["projeto" => $projetoWillUpdate], 200);
+        return response()->json(["projeto" => Projeto::with('ong', 'voluntarios')->where('id', $id)->get()->first()], 200);
+    }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function listProjectsOfVoluntario($voluntario_id)
+    {
+        $projetos = Voluntario::find($voluntario_id)->projetos()->with('ong')->where('dataInicio', '<=', Carbon::now())->where('dataTermino', '>', Carbon::now())->paginate(16);
+
+        return response()->json(["projetos" => $projetos], 200);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function listProjectsOfVoluntarioPassed($voluntario_id)
+    {
+        $projetos = Voluntario::find($voluntario_id)->projetos()->with('ong')->where('dataTermino', '<', Carbon::now())->paginate(16);
+
+        return response()->json(["projetos" => $projetos], 200);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function listProjectsOfVoluntarioStartTo($voluntario_id)
+    {
+        $projetos = Voluntario::find($voluntario_id)->projetos()->with('ong')->where('dataInicio', '>', Carbon::now())->paginate(16);
+
+        return response()->json(["projetos" => $projetos], 200);
     }
 
     /**

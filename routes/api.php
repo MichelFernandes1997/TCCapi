@@ -34,6 +34,12 @@ Route::get('/all/projeto', 'ProjetoController@all')->middleware('check.token');
 
 Route::get('/passed/projeto', 'ProjetoController@passed')->middleware('check.token');
 
+Route::get('/voluntario/projeto/{voluntario_id}', 'ProjetoController@listProjectsOfVoluntario')->middleware('check.token');
+
+Route::get('/voluntario/projeto/passed/{voluntario_id}', 'ProjetoController@listProjectsOfVoluntarioPassed')->middleware('check.token');
+
+Route::get('/voluntario/projeto/startTo/{voluntario_id}', 'ProjetoController@listProjectsOfVoluntarioStartTo')->middleware('check.token');
+
 Route::resource('ong', OngController::class);
 
 Route::resource('voluntario', VoluntarioController::class);
