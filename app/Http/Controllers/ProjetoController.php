@@ -19,7 +19,8 @@ class ProjetoController extends Controller
      */
     public function index()
     {
-        $projetos = Projeto::with('ong', 'voluntarios')->orderBy('id', 'desc')
+        $projetos = Projeto::with('ong', 'voluntarios')->Where('dataTermino', '>', Carbon::now())
+                                                       ->orderBy('id', 'desc')
                                                        ->take(11)
                                                        ->get();
 
